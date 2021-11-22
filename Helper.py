@@ -307,5 +307,30 @@ def tensor_to_image(tensor, factor = 255):
     return img
 
 
+def load_and_prep_image(filname, img_shape=224, scale =True):
+  """ 
+  Reads in an image from filename turns it into a tensore ans reshapes into a specified shape (img_shape, impg_shape, color_channels=3)
+  Args:
+    filename (str): path to target image
+    image_shape (int): height/width dimension of target size
+    scale (bool): scale pixel values from 0-255 to 0-1 or not
+  
+  Returns: 
+    Image tensor of shappe (ímg_shape, img_shape,3)
+  """
+  #read image
+  image = tf.io.read_file(filename)
+
+  # decode image into tensor
+  image = tf.io.decode_image(image, channels=3)
+
+  image = tf.image.resize(image, [img_shape,image_shape]) 
+
+  if scale:
+    return images/255. 
+  else:
+    return image
+
+
 
 
