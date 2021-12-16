@@ -332,5 +332,34 @@ def load_and_prep_image(filname, img_shape=224, scale =True):
     return image
 
 
+# make a function for preprocessing images
+
+
+def preprocess_image (image, label, img_shape= 224, rescale=False):
+    ''' 
+    Converts image datatypes from "uint8" to "float32 and reshapes image to 
+    [img_shape, img_shape,color_channel]"
+    resize'''
+    if rescale:
+        image = image/255. #scale the image if needed not required with effiicent net
+    
+    image = tf.image.resize (image, [img_shape, img_shape])
+    
+    return tf.cast(image, tf.float32),label # return a tupel of float32, label
+    
+
+from sklearn.metrics import confusion_matrix, classification_report, precision_recall_fscore_support
+import seaborn as sns
+
+def show_confusion_matrix (y_pred,val_labels):
+  ''' shows confusion matrix and classification_report'''
+
+
+  cm = confusion_matrix(y_pred,val_labels)
+  plt.figure(figsize=(3,3))
+  sns.heatmap(cm, annot=True,fmt='.0f',cbar=False)
+  plt.show()
+  print(classification_report(y_pred,val_labels))
+
 
 
