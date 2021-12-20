@@ -362,4 +362,15 @@ def show_confusion_matrix (y_pred,val_labels):
   print(classification_report(y_pred,val_labels))
 
 
+import time
+def pred_timer (model,samples):
+    ''' Time how long a model takes to make prediction on samples
+    '''
+
+    start_time = time.perf_counter() # get start time
+    model.predict(samples)
+    end_time = time.perf_counter()
+    total_time = end_time - start_time
+    time_per_pred = total_time/len(samples)
+    return total_time, time_per_pred
 
